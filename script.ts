@@ -84,9 +84,11 @@ function updatePetInfoInHtml(): void {
   $(".happiness").text(petInfo.happiness);
   $(".distance").text(petInfo.distance);
 
-  if (petInfo.weight > 30) {
-    $(".treat-reward").addClass("visible");
+  if (petInfo.happiness > 30) {
+    $(".pet-image").attr("src", "images/treat.png");
+    $(".pet-image").attr("alt", "A treat for your kitten");
   } else {
-    $(".treat-reward").removeClass("visible");
+    $(".pet-image").attr("src", "images/kitten.png");
+    $(".pet-image").attr("alt", "A discord kitten");
   }
 }
