@@ -18,16 +18,19 @@
     </header>
 
     <main>
+      <!-- Left panel: main pet image that swaps based on happiness. -->
       <section class="pet-image-container">
          <!-- Replaced pet image with my own pet image -->
         <img class="pet-image" src="images/kitten.png" alt="A discord kitten">
       </section>
+      <!-- Right panel: live stats and action buttons. -->
       <section class="dashboard">
         <div>Name: <strong><span class="name"></span></strong></div>
         <div>Weight: <strong><span class="weight"></span> pounds</strong></div>
         <div>Happiness: <strong><span class="happiness"></span> tail wags (per min)</strong></div>
         <div>Distance: <strong><span class="distance"></span> feet away</strong></div>
 
+        <!-- Action controls connected to jQuery click handlers in script.js/script.ts. -->
         <div class="button-container">
           <button class="treat-button">
             Treat

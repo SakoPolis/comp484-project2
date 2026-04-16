@@ -1,3 +1,4 @@
+// Core pet state model used by all UI actions.
 interface PetInfo {
   name: string;
   weight: number;
@@ -5,6 +6,7 @@ interface PetInfo {
   distance: number;
 }
 
+// Initial values shown when the page first loads.
 const petInfo: PetInfo = {
   name: "Discord Kitten",
   weight: 12,
@@ -12,6 +14,7 @@ const petInfo: PetInfo = {
   distance: 10,
 };
 
+// jQuery-ready block: bind button actions and render initial state.
 $(function (): void {
   checkAndUpdatePetInfoInHtml();
 
@@ -23,6 +26,7 @@ $(function (): void {
   $(".call-button").on("click", clickedCallButton);
 });
 
+// Adds and removes a temporary CSS class to trigger button animations.
 function animateButton(buttonSelector: string): void {
   const $button = $(buttonSelector);
   $button.addClass("animating");
@@ -31,6 +35,7 @@ function animateButton(buttonSelector: string): void {
   }, 600);
 }
 
+// Treat increases both happiness and weight.
 function clickedTreatButton(): void {
   animateButton(".treat-button");
   petInfo.happiness += 1;
@@ -38,6 +43,7 @@ function clickedTreatButton(): void {
   checkAndUpdatePetInfoInHtml();
 }
 
+// Play boosts happiness but burns a little weight.
 function clickedPlayButton(): void {
   animateButton(".play-button");
   petInfo.happiness += 2;
@@ -45,6 +51,7 @@ function clickedPlayButton(): void {
   checkAndUpdatePetInfoInHtml();
 }
 
+// Exercise lowers both happiness and weight.
 function clickedExerciseButton(): void {
   animateButton(".exercise-button");
   petInfo.happiness -= 1;
@@ -52,6 +59,7 @@ function clickedExerciseButton(): void {
   checkAndUpdatePetInfoInHtml();
 }
 
+// Call brings the pet closer by reducing distance.
 function clickedCallButton(): void {
   animateButton(".call-button");
   petInfo.happiness += 1;
@@ -59,11 +67,13 @@ function clickedCallButton(): void {
   checkAndUpdatePetInfoInHtml();
 }
 
+// Single update pipeline keeps data checks and UI rendering consistent.
 function checkAndUpdatePetInfoInHtml(): void {
   checkWeightAndHappinessBeforeUpdating();
   updatePetInfoInHtml();
 }
 
+// Prevents stats from dropping below zero.
 function checkWeightAndHappinessBeforeUpdating(): void {
   if (petInfo.weight < 0) {
     petInfo.weight = 0;
@@ -78,12 +88,14 @@ function checkWeightAndHappinessBeforeUpdating(): void {
   }
 }
 
+// Renders the latest stats and swaps the image based on happiness.
 function updatePetInfoInHtml(): void {
   $(".name").text(petInfo.name);
   $(".weight").text(petInfo.weight);
   $(".happiness").text(petInfo.happiness);
   $(".distance").text(petInfo.distance);
 
+  // Show a treat image when happiness is high; otherwise show the kitten.
   if (petInfo.happiness > 30) {
     $(".pet-image").attr("src", "images/treat.png");
     $(".pet-image").attr("alt", "A treat for your kitten");
