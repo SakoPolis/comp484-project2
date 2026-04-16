@@ -64,6 +64,22 @@
   .dashboard div strong {
     color: #FFFFFF;
   }
+
+  .treat-reward {
+    display: none;
+    margin-top: 10px;
+  }
+
+  .treat-reward.visible {
+    display: block;
+    animation: reward-fade-in 0.35s ease-out;
+  }
+
+  .treat-image {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+  }
   
   .pet-image-container {
     float:left;
@@ -130,6 +146,11 @@
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-6px); }
     75% { transform: translateX(6px); }
+  }
+
+  @keyframes reward-fade-in {
+    0% { opacity: 0; transform: translateY(4px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   .treat-button.animating {

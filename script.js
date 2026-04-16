@@ -7,8 +7,10 @@ const petInfo = {
 };
 $(function () {
     checkAndUpdatePetInfoInHtml();
-    $(".treat-button").on("click", clickedTreatButton);
-    $(".play-button").on("click", clickedPlayButton);
+    $(".treat-button").bind("click", clickedTreatButton);
+    // Modern equivalent: $(".treat-button").on("click", clickedTreatButton);
+    $(".button-container").delegate(".play-button", "click", clickedPlayButton);
+    // Modern equivalent: $(".button-container").on("click", ".play-button", clickedPlayButton);
     $(".exercise-button").on("click", clickedExerciseButton);
     $(".call-button").on("click", clickedCallButton);
 });
@@ -63,5 +65,11 @@ function updatePetInfoInHtml() {
     $(".weight").text(petInfo.weight);
     $(".happiness").text(petInfo.happiness);
     $(".distance").text(petInfo.distance);
+    if (petInfo.weight > 30) {
+        $(".treat-reward").addClass("visible");
+    }
+    else {
+        $(".treat-reward").removeClass("visible");
+    }
 }
 //# sourceMappingURL=script.js.map
