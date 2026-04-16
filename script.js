@@ -7,7 +7,8 @@ const petInfo = {
     distance: 10,
 };
 // Reused audio instance so repeated clicks restart the same ringtone.
-const callSound = new Audio("sounds/rare-discord-ringtone.mp3");
+let callSound = new Audio("sounds/rare-discord-ringtone.mp3");
+let hasAppliedAudioFallback = false;
 // jQuery-ready block: bind button actions and render initial state.
 $(function () {
     checkAndUpdatePetInfoInHtml();
@@ -31,6 +32,25 @@ function initializeCallSoundControls() {
     $muteToggle.on("change", function () {
         callSound.muted = Boolean($(this).prop("checked"));
     });
+}
+async function applyCallAudioFallbackIfNeeded() {
+    if (hasAppliedAudioFallback) {
+        return;
+    }
+    hasAppliedAudioFallback = true;
+    try {
+        const response = await fetch("sounds/rare-discord-ringtone.mp3");
+        const audioBuffer = await response.arrayBuffer();
+        const remuxedBlob = new Blob([audioBuffer], { type: "audio/mpeg" });
+        const remuxedUrl = URL.createObjectURL(remuxedBlob);
+        const replacementSound = new Audio(remuxedUrl);
+        replacementSound.volume = callSound.volume;
+        replacementSound.muted = callSound.muted;
+        callSound = replacementSound;
+    }
+    catch (_a) {
+        // Keep the original source if fallback preparation fails.
+    }
 }
 // Adds and removes a temporary CSS class to trigger button animations.
 function animateButton(buttonSelector) {
@@ -66,7 +86,13 @@ function clickedCallButton() {
     animateButton(".call-button");
     callSound.currentTime = 0;
     void callSound.play().catch(() => {
-        // Ignore play failures if the browser temporarily blocks playback.
+        // Fallback for environments that reject the original MIME/container combo.
+        void applyCallAudioFallbackIfNeeded().then(() => {
+            callSound.currentTime = 0;
+            void callSound.play().catch(() => {
+                // Ignore secondary failures (for example, temporary autoplay policy blocks).
+            });
+        });
     });
     petInfo.happiness += 1;
     petInfo.distance -= 2;
