@@ -14,9 +14,13 @@ const petInfo: PetInfo = {
   distance: 10,
 };
 
+// Reused audio instance so repeated clicks restart the same ringtone.
+const callSound = new Audio("sounds/rare-discord-ringtone.mp3");
+
 // jQuery-ready block: bind button actions and render initial state.
 $(function (): void {
   checkAndUpdatePetInfoInHtml();
+  initializeCallSoundControls();
 
   $(".treat-button").bind("click", clickedTreatButton);
   // Modern equivalent: $(".treat-button").on("click", clickedTreatButton);
@@ -25,6 +29,22 @@ $(function (): void {
   $(".exercise-button").on("click", clickedExerciseButton);
   $(".call-button").on("click", clickedCallButton);
 });
+
+function initializeCallSoundControls(): void {
+  const $volumeInput = $("#call-volume");
+  const $muteToggle = $("#call-mute");
+
+  $volumeInput.on("input change", function () {
+    const sliderValue = Number($(this).val());
+    if (!Number.isNaN(sliderValue)) {
+      callSound.volume = Math.min(1, Math.max(0, sliderValue));
+    }
+  });
+
+  $muteToggle.on("change", function () {
+    callSound.muted = Boolean($(this).prop("checked"));
+  });
+}
 
 // Adds and removes a temporary CSS class to trigger button animations.
 function animateButton(buttonSelector: string): void {
@@ -62,6 +82,10 @@ function clickedExerciseButton(): void {
 // Call brings the pet closer by reducing distance.
 function clickedCallButton(): void {
   animateButton(".call-button");
+  callSound.currentTime = 0;
+  void callSound.play().catch(() => {
+    // Ignore play failures if the browser temporarily blocks playback.
+  });
   petInfo.happiness += 1;
   petInfo.distance -= 2;
   checkAndUpdatePetInfoInHtml();

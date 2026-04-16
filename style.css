@@ -105,6 +105,25 @@
     flex-wrap: wrap;
   }
 
+  .call-audio-controls {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  .call-audio-controls input[type="range"] {
+    width: 120px;
+    accent-color: #5865F2;
+  }
+
+  .mute-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
   /* Shared action button style and interaction states. */
   
   .button-container button {
