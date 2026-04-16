@@ -4,6 +4,9 @@
   "description": "",
   "main": "script.js",
   "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "clean": "rm -f script.js script.js.map",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,10 +22,10 @@
   },
   "homepage": "https://github.com/SakoPolis/comp484-project2#readme",
   "dependencies": {
-    "jquery": "^4.0.0"
+    "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "@types/jquery": "^4.0.0",
-    "typescript": "^6.0.2"
+    "@types/jquery": "^3.5.33",
+    "typescript": "^5.7.3"
   }
 }
