@@ -4,8 +4,10 @@
   }
   
   body {
-    font-family: helvetica, arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
     margin: 25px;
+    background-color: #36393F;
+    color: #DCDDDE;
   }
   
   main {
@@ -14,16 +16,17 @@
   }
   
   header {
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid #5865F2;
   }
   
   h1 {
-    font-weight: bold;
-    color: #000;
+    font-weight: 600;
+    color: #FFFFFF;
+    font-size: 32px;
   }
   
   .bold {
-    font-weight: bold;
+    font-weight: 600;
   }
   
   p {
@@ -37,20 +40,29 @@
   
   footer {
     padding-top: 25px;
-    border-top: 1px solid black;
+    border-top: 1px solid #2C2F33;
   }
   
   footer a {
     float:left;
     margin:5px;
+    color: #5865F2;
   }
   
   .pet-image {
     height:250px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   }
   
   .dashboard div {
     display:block;
+    padding: 8px 0;
+    font-size: 16px;
+  }
+  
+  .dashboard div strong {
+    color: #FFFFFF;
   }
   
   .pet-image-container {
@@ -61,22 +73,77 @@
   .dashboard {
     float:left;
     padding:20px;
+    background-color: #2C2F33;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   }
   
   .button-container {
     margin-top:20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
   }
   
   .button-container button {
     width: 100px;
-      margin-right: 10px;
-      text-align: center;
-      display: inline-block;
-      float: left;
+    padding: 10px;
+    text-align: center;
     font-size:15px;
-    background-color: #1e2835;
-    border-color: #404853;
+    font-weight: 500;
+    background-color: #5865F2;
+    border: none;
+    border-radius: 4px;
     cursor:pointer;
-    background-image: linear-gradient(to bottom,rgba(246,246,246,.1)0%,rgba(30,40,53,0)66%);
-    color: #fafafa;
+    color: #FFFFFF;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .button-container button:hover {
+    background-color: #4752C4;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .button-container button:active {
+    transform: translateY(0);
+  }
+
+  @keyframes treat-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes play-spin {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  @keyframes exercise-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+
+  @keyframes call-slide {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .treat-button.animating {
+    animation: treat-bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .play-button.animating {
+    animation: play-spin 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .exercise-button.animating {
+    animation: exercise-pulse 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .call-button.animating {
+    animation: call-slide 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
